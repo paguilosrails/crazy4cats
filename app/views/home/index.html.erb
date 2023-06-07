@@ -1,0 +1,14 @@
+<div class="container">
+    <% if user_signed_in? %>  
+        <% if current_user.username %>  
+            <h1>Bienvenido <%= current_user.username %> a Crazy4Cats</h1>
+            <% else %>
+            <h1>Bienvenido <%= current_user.email%> a Crazy4Cats</h1>
+        <% end %>    
+            <p class="subtitulo fs-3">El portal de los locos por los michis!!! </p>               
+    <% else %>    
+        <h1>Bienvenido a Crazy4Cats</h1>    
+        <h5>Registrate o logueate para compartir tus historias gatunas!!!</h5> 
+    <% end %>      
+    <%= render partial: 'publications/index', locals: { publication: @publication } %> 
+</div>  

@@ -1,0 +1,12 @@
+<div id="<%= dom_id publication %>"> 
+     <div class="card">
+      <%= image_tag( publication.image , class: "card-img-top") %>
+      <div class="card-body">
+        <h5 class="card-title text-start"> <p><strong></strong><%= publication.title %></p></h5>
+        <p class="card-text text-start"> <p><strong></strong><%= publication.description %></p></p> 
+      </div>
+      <div class= "ver_noticia text-center">
+        <%= link_to "Ver noticia", publication %>    
+      </div>
+    </div>
+  
