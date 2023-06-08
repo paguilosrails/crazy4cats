@@ -1,28 +1,39 @@
-<% if current_user.admin? %>
-  <%= link_to "Editar", edit_publication_path(@publication) %>
-  <%= link_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" } %>
-<% elsif current_user.id == @publication.user_id %>
-  <%= link_to "Editar", edit_publication_path(@publication) %>
-  <%= link_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" } %>
-<% end %>
+  <div class="container">
+     <p style="color: green"><%= notice %></p>
+ </div>
 
-<%# <% if current_user.admin? || current_user.author? %> 
-      <%# <%= button_to "Eliminar", delete_note_path(@note), method: :delete, class: "nav-link" %>
-      <%# <%= link_to "Editar", edit_note_path(@note), class: "nav-link"%>    
-    <%# <%end%>
-    <% if user_signed_in? %>   
-      <%= link_to "Comentar", new_publication_comment_path(@publication), class: "nav-link" %>
-      <% Publication::Kinds.each do |kind| %>
-          <%= button_to "#{Publication::KindsSpanish[kind]}",
-          new_user_reaction_path(publication_id: @publication.id, reaction_type:
-          "publication", kind: kind), method: :post %>
-      <% end %>
+  <%= render partial: 'publication', locals: { publication: @publication } %>
 
-    <%end%>   
+  <nav class="nav justify-content-start pt-3"> 
+      <% if user_signed_in? %>   
+        <%= button_to "Comentar", new_publication_comment_path(@publication), class: "btn btn-light me-3 ms-2" %>
+        <% Publication::Kinds.each do |kind| %>
+            <%= button_to "#{Publication::KindsSpanish[kind]}",
+            new_user_reaction_path(publication_id: @publication.id, reaction_type:
+            "publication", kind: kind), method: :post, class: "btn btn-light me-3" %>
+        <% end %>
+      <%end%>   
+  </nav>
+
+  <nav class="nav justify-content-end pb-3">  
+    <% if current_user.admin? %>
+      <%= link_to "Editar", edit_publication_path(@publication) %>
+      <%= link_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" } %>
+    <% elsif current_user.id == @publication.user_id %>
+      <%= link_to "Editar", edit_publication_path(@publication) %>
+      <%= link_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" } %>
+    <% end %>
+  </nav>
    
 
-      <%= link_to "Volver a noticias", home_index_path, class: "nav-link" %>
- </nav>
+</div>
+  <%# <% if current_user.admin? || current_user.author? %> 
+        <%# <%= button_to "Eliminar", delete_note_path(@note), method: :delete, class: "nav-link" %>
+        <%# <%= link_to "Editar", edit_note_path(@note), class: "nav-link"%>    
+      <%# <%end%>
+   
+      <%= link_to "Volver a publicaciones", home_index_path, class: "nav-link" %>
+ 
  
   <div class="container mt-5">
     <h5>Comentarios</h5><br/>
@@ -30,7 +41,7 @@
         <% @comments.each do |comment| %>
           <%= render comment %>
           <p>
-            <%= link_to "Ver", note_comment_path(@note, comment), class: "nav-link" %>
+            <%= link_to "Ver", publication_comment_path(@publication, comment), class: "nav-link" %>
           </p>
         <% end %>
       </div> 

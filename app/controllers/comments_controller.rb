@@ -2,7 +2,8 @@ class CommentsController < ApplicationController
     before_action :authenticate_user!, except: [:index, :show]
     before_action :authorize_admin_or_author, only: [:update, :edit, :destroy]
     before_action :set_comment, only: [:show, :edit, :update, :destroy ]
-    # before_action :set_note, only: [:new, :create, :show, :edit, :update, :destroy]
+    # before_action :set_publication, only: [:create, :show, :edit, :update, :destroy ] 
+    
     
     # GET /comments or /comments.json
     def index
@@ -11,13 +12,13 @@ class CommentsController < ApplicationController
   
     # GET /comments/1 or /comments/1.json
     def show
-      @publication =  Publication.find(params[:note_id])
+      @publication =  Publication.find(params[:publication_id])
       @comment =  @publication.comments.find(params[:id])
     end
   
     # GET /comments/new
     def new
-      @publication =  Publication.find(params[:note_id])
+     @publication =  Publication.find(params[:publication_id])
       @comment =  @publication.comments.build
     end
   
@@ -27,13 +28,13 @@ class CommentsController < ApplicationController
   
     # POST /comments or /comments.json
     def create
-      @publication =  Publication.find(params[:note_id])
-      @comment =  @publication.comments.build(comment_params)
+      @publication = Publication.find(params[:publication_id])
+      @comment = @publication.comments.build(comment_params)
       @comment.user = current_user
     
       respond_to do |format|
         if @comment.save
-          format.html { redirect_to  @publication, notice: "Comentario creado exitosamente." }
+          format.html { redirect_to @publication, notice: "Comentario creado exitosamente." }
           format.json { render :show, status: :created, location: @comment }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -57,7 +58,7 @@ class CommentsController < ApplicationController
   
     # DELETE /comments/1 or /comments/1.json
     def destroy
-      @publication = @comment.note
+      @publication = @comment.publication
       @comment.destroy
   
       respond_to do |format|
@@ -75,11 +76,5 @@ class CommentsController < ApplicationController
       # Only allow a list of trusted parameters through.
       def comment_params
         params.require(:comment).permit(:content, :user_id, :note_id)
-      end
-
-      def authorize_admin_or_author 
-        unless current_user.admin? || current_user.id == @comment.user_id
-          redirect_to home_index_path, notice: "No estás autorizado para hacer esta acción"
-        end
       end
 end

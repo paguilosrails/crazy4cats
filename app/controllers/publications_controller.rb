@@ -1,7 +1,7 @@
 class PublicationsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :authorize_admin_or_author, only: [:update, :edit, :destroy]
-  before_action :set_publication, only: %i[ show edit update destroy ]
+  before_action :set_publication, only: [ :show, :edit, :update, :destroy ]
   
 
   # GET /publications or /publications.json
@@ -14,7 +14,7 @@ class PublicationsController < ApplicationController
     @publication = Publication.find(params[:id])
     @comments = @publication.comments
   end
-
+  
   # GET /publications/new
   def new
     @publication = Publication.new

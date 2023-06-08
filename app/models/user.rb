@@ -10,4 +10,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :publications
   has_many :comments
+  has_many :articles, through: :reactions 
 end

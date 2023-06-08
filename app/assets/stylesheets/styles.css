@@ -1,6 +1,13 @@
-.ver_noticia {
-    color: white;
+.navbar {
+   background-color:orange ;
   }
   
-  
+.nav {
+  background-color:orange ;
+ }
+
+ .card {
+    border-color: green;
+    border-width: 7px;
+ }
   

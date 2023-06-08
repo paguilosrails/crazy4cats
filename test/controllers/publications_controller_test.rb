@@ -11,13 +11,12 @@ class PublicationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new" do
-    sign_in @user
+    
     get new_publication_url
     assert_response :success
   end
 
-  test "should create publication" do
-    sign_in @user
+  test "should create publication" do   
     assert_difference("Publication.count") do
       post publications_url, params: { publication: { description: @publication.description, image: @publication.image, title: @publication.title, user_id: @publication.user_id } }
     end
@@ -25,14 +24,12 @@ class PublicationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to publication_url(Publication.last)
   end
 
-  test "should show publication" do
-    
+  test "should show publication" do    
     get publication_url(@publication)
     assert_response :success
   end
 
-  test "should get edit" do
-    sign_in @user
+  test "should get edit" do   
     get edit_publication_url(@publication)
     assert_response :success
   end

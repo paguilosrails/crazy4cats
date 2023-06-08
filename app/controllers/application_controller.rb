@@ -3,7 +3,13 @@ class ApplicationController < ActionController::Base
     
     def authorize_admin
         unless current_user.admin?
-        redirect_to home_index_path, notice: "No estás autorizado para hacer esta acción"
+        redirect_to home_index_path, notice: "You are not authorized to perform this action"
+        end
+    end
+       
+    def authorize_admin_or_author
+        unless current_user.admin? || current_user.author?
+          redirect_to notes_path, notice: "No estás autorizado para realizar esta acción."
         end
     end     
    
