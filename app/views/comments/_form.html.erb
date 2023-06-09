@@ -18,6 +18,32 @@
     </div>
 
     <div>
+      <div>
+  <%= form.label :anonymous, class: "form-check-label" do %>
+    <%= form.check_box :anonymous, class: "form-check-input", id: "comment_anonymous" %>
+    Comentar como anónimo
+  <% end %>
+</div>
+
+<div id="username_field">
+  <%= form.label :username, style: "display: block", class: "form-label" %>
+  <%= form.text_field :username, value: current_user.username, class: "form-control" %>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const anonymousCheckbox = document.getElementById("comment_anonymous");
+    const usernameField = document.getElementById("username_field");
+
+    anonymousCheckbox.addEventListener("change", function() {
+      usernameField.style.display = this.checked ? "none" : "block";
+    });
+  });
+</script>
+
+
+
+    <div>
       <%=form.hidden_field :user_id, value: current_user.id  %>
     </div>
 

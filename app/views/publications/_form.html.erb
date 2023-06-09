@@ -1,10 +1,10 @@
-<%= form_with(model: note) do |form| %>
-  <% if note.errors.any? %>
+<%= form_with(model: publication) do |form| %>
+  <% if publication.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(note.errors.count, "error") %> No se pudo grabar la publicación</h2>
+      <h2><%= pluralize(publication.errors.count, "error") %> No se pudo grabar la publicación</h2>
 
       <ul>
-        <% note.errors.each do |error| %>
+        <% publication.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

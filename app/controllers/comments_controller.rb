@@ -31,6 +31,7 @@ class CommentsController < ApplicationController
       @publication = Publication.find(params[:publication_id])
       @comment = @publication.comments.build(comment_params)
       @comment.user = current_user
+      @comment.anonymous = true if params[:comment][:anonymous] == "1"
     
       respond_to do |format|
         if @comment.save
@@ -75,6 +76,12 @@ class CommentsController < ApplicationController
   
       # Only allow a list of trusted parameters through.
       def comment_params
-        params.require(:comment).permit(:content, :user_id, :note_id)
+        params.require(:comment).permit(:content, :user_id, :note_id, :anonymous)
+      end
+
+      def authorize_admin_or_author
+        unless current_user.admin? || (@publication && current_user.id == @publication.user_id)
+          redirect_to home_index_path, notice: "No estás autorizado para hacer esta acción"
+        end
       end
 end

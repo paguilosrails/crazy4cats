@@ -4,46 +4,65 @@
 
   <%= render partial: 'publication', locals: { publication: @publication } %>
 
-  <nav class="nav justify-content-start pt-3"> 
-      <% if user_signed_in? %>   
-        <%= button_to "Comentar", new_publication_comment_path(@publication), class: "btn btn-light me-3 ms-2" %>
-        <% Publication::Kinds.each do |kind| %>
-            <%= button_to "#{Publication::KindsSpanish[kind]}",
-            new_user_reaction_path(publication_id: @publication.id, reaction_type:
-            "publication", kind: kind), method: :post, class: "btn btn-light me-3" %>
+  <div class="row">
+    <div class="col">
+      <nav class="nav pt-3 pb-3">
+        <% if user_signed_in? %>
+          <div class="d-flex">           
+           <%= button_to "Comentar", new_publication_comment_path(@publication), method: :get, class: "btn btn-light me-3 ms-4" %>
+            <div class="ml-3">
+              <div class="d-inline-flex">
+                <% Publication::Kinds.each do |kind| %>
+                  <%= button_to "#{Publication::KindsSpanish[kind]}",
+                    new_user_reaction_path(publication_id: @publication.id, reaction_type: "publication", kind: kind),
+                    method: :post,
+                    class: "btn btn-light me-3" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
         <% end %>
-      <%end%>   
-  </nav>
-
-  <nav class="nav justify-content-end pb-3">  
-    <% if current_user.admin? %>
-      <%= link_to "Editar", edit_publication_path(@publication) %>
-      <%= link_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" } %>
-    <% elsif current_user.id == @publication.user_id %>
-      <%= link_to "Editar", edit_publication_path(@publication) %>
-      <%= link_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" } %>
-    <% end %>
-  </nav>
-   
-
-</div>
-  <%# <% if current_user.admin? || current_user.author? %> 
-        <%# <%= button_to "Eliminar", delete_note_path(@note), method: :delete, class: "nav-link" %>
-        <%# <%= link_to "Editar", edit_note_path(@note), class: "nav-link"%>    
-      <%# <%end%>
+      </nav>
+      <div class="card text-bg-success mb-3 mt-5" style="max-width: 18rem;">
+        <div class="card-header">Comentarios</div>
+          <div class="card-body">        
+            <h5 class="card-title"></h5>
+            <p class="card-text">
+              <% @comments.each do |comment| %>
+                    <%= render comment %></p>
+                    <%= link_to "Ver", publication_comment_path(@publication, comment), class: "nav-link" %>
+              <% end %>
+          </div>
+      </div>
+    </div>
+    <div class="col">
+      
+    </div>
+    <div class="col">
+      <nav class="nav pt-2 pb-3 ms-5 justify-content-center">
+        <% if current_user.admin? || current_user.id == @publication.user_id %>          
+            <%= button_to "Editar", edit_publication_path(@publication), method: :get, class: "btn btn btn-secondary text-white mt-2 ms-5" %>
+            <%= button_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn btn-secondary text-white mt-2 ms-3 me-5" %>      
+        <% end %>        
+      </nav>
+      <div class="card text-bg-success mb-3 mt-5 float-end w-75" style="max-width: 18rem;">
+        <div class="card-header">Reacciones</div>
+          <div class="card-body">             
+            <p class="card-text"><p>Me gusta: <%= @publication.likes_count %></p>
+            <p>No me gusta: <%= @publication.dislikes_count %></p></p>
+          </div>
+        </div>
+      </div>      
+    </div>
+    
+  </div>
    
       <%= link_to "Volver a publicaciones", home_index_path, class: "nav-link" %>
  
+
+
+
+
+
+
  
-  <div class="container mt-5">
-    <h5>Comentarios</h5><br/>
-      <div id="comments">
-        <% @comments.each do |comment| %>
-          <%= render comment %>
-          <p>
-            <%= link_to "Ver", publication_comment_path(@publication, comment), class: "nav-link" %>
-          </p>
-        <% end %>
-      </div> 
-  </div>  
-</div>

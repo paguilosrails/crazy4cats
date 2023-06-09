@@ -6,7 +6,7 @@ class PublicationsController < ApplicationController
 
   # GET /publications or /publications.json
   def index
-    @publications = Publication.all
+    @publications = Publication.all.order(created_at: :desc)   
   end
 
   # GET /publications/1 or /publications/1.json
@@ -21,7 +21,7 @@ class PublicationsController < ApplicationController
   end
 
   # GET /publications/1/edit
-  def edit
+  def edit    
   end
 
   # POST /publications or /publications.json
@@ -75,7 +75,7 @@ class PublicationsController < ApplicationController
     end
  
     def authorize_admin_or_author
-      unless current_user.admin? || current_user.id == @publication.user_id
+      unless current_user.admin? || (@publication && current_user.id == @publication.user_id)
         redirect_to home_index_path, notice: "No estás autorizado para hacer esta acción"
       end
     end

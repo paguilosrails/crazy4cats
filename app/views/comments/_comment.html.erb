@@ -1,6 +1,11 @@
 <div id="<%= dom_id comment %>">
-  <p>
-    <strong>Content:</strong>
-    <%= comment.content %>
-  </p>
+ <p>
+  <% if comment.anonymous? %>
+    <strong>Anónimo: </strong>
+  <% else %>
+     <strong><%= comment.user.username %>: </strong>
+  <% end %>
+</p>   
+    <%= comment.content %>    
+
 </div>
