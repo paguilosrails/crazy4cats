@@ -5,7 +5,7 @@
   <%= render partial: 'publication', locals: { publication: @publication } %>
 
   <div class="row">
-    <div class="col">
+    <div class="col-sm">
       <nav class="nav pt-3 pb-3">
         <% if user_signed_in? %>
           <div class="d-flex">           
@@ -23,7 +23,7 @@
           </div>
         <% end %>
       </nav>
-      <div class="card text-bg-success mb-3 mt-5" style="max-width: 18rem;">
+      <div class="card text-bg-success mb-3 mt-5" style="max-width: 100%;">
         <div class="card-header">Comentarios</div>
           <div class="card-body">        
             <h5 class="card-title"></h5>
@@ -45,7 +45,7 @@
             <%= button_to "Eliminar", publication_path(@publication), method: :delete, data: { confirm: "¿Estás seguro?" }, class: "btn btn btn-secondary text-white mt-2 ms-3 me-5" %>      
         <% end %>        
       </nav>
-      <div class="card text-bg-success mb-3 mt-5 float-end w-75" style="max-width: 18rem;">
+      <div class="card text-bg-success mb-3 mt-5 float-end w-75" style="max-width: 100%;">
         <div class="card-header">Reacciones</div>
           <div class="card-body">             
             <p class="card-text"><p>Me gusta: <%= @publication.likes_count %></p>
